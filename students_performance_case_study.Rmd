@@ -1,0 +1,30 @@
+---
+title: "Student Performance Dashboard"
+author: "Atharvshirsh Rai"
+date: "2026-02-28"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+
+students <- read.csv("StudentsPerformance.csv")
+head(students)
+
+str(students)
+summary(students)
+
+students %>%
+  group_by(gender) %>%
+  summarise(
+    avg_math = mean(math.score),
+    avg_reading = mean(reading.score),
+    avg_writing = mean(writing.score)
+  )
+
+ggplot(students, aes(x = gender, y = math.score, fill = gender)) +
+  geom_boxplot()
+
+ggplot(students, aes(x = reading.score, y = writing.score)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
